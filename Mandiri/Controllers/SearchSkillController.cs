@@ -23,14 +23,14 @@ namespace Mandiri.Controllers
         public async Task<SkillResponse> SearchSkill([FromBody]SkillRequest request )
         {
             var response = new SkillResponse();
-            var userName = _context.Users.Where(x => x.Username == request.username).FirstOrDefault();
-            var userSkill = _context.UserSkills.Where(x => x.Username == request.username).FirstOrDefault();
-            var skill = _context.Skills.Where(x => x.SkillId == userSkill.SkillId).FirstOrDefault();
-            var level = _context.SkillLevels.Where(x => x.SkillLevelId == userSkill.SkillLevelId).FirstOrDefault();
-            response.userskillid = userSkill.UserSkillId;
-            response.skill = skill.SkillName;
-            response.level = level.SkillLevelName;
-            response.username = userName.Username;            
+            //var userName = _context.Users.Where(x => x.Username == request.username).FirstOrDefault();
+            //var userSkill = _context.UserSkills.Where(x => x.Username == request.username).FirstOrDefault();
+            //var skill = _context.Skills.Where(x => x.SkillId == userSkill.SkillId).FirstOrDefault();
+            //var level = _context.SkillLevels.Where(x => x.SkillLevelId == userSkill.SkillLevelId).FirstOrDefault();
+            //response.userskillid = userSkill.UserSkillId;
+            //response.skill = skill.SkillName;
+            //response.level = level.SkillLevelName;
+            //response.username = userName.Username;            
 
             return response;
         }

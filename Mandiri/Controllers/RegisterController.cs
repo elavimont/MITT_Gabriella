@@ -1,4 +1,5 @@
 ﻿using Mandiri.Data;
+using Mandiri.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Configuration;
@@ -21,16 +22,28 @@ namespace Mandiri.Controllers
 
 
         [HttpPost]
-        public async Task<ActionResult<User>> CreateUser(User users)
+        public async Task<ActionResult<User>> CreateUser([FromBody]UserRequest request)
         {
+            var newUp = new UserProfile
+            {
+                Username = request.UserName,
+                Address = request.Address,
+                Name = request.Name,
+                BoD = request.BoD,
+                Email = request.email,
+                RowStatus = true
+            };
+
             var newUser = new User
             {
-                Username = users.Username,
-                Password = users.Password,
+                Username = request.UserName,
+                Password = request.Password,
                 RowStatus = true
             };
 
             _context.Users.Add(newUser);
+            _context.UserProfiles.Add(newUp);
+
             await _context.SaveChangesAsync();
 
             return Ok();
