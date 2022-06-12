@@ -2,7 +2,6 @@
 using Mandiri.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Data.SqlClient;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,28 +11,27 @@ namespace Mandiri.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class UpdateSkillController : ControllerBase
+    public class DeleteSkillController : ControllerBase
     {
         private readonly MandiriTestContext _context;
-        public UpdateSkillController(MandiriTestContext context)
+        public DeleteSkillController(MandiriTestContext context)
         {
             _context = context;
         }
 
-        [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateSkill(int id, [FromBody]SkillRequest request)
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteSkill(int id)
         {
-            //var userSkill = _context.UserSkills.Where(x => x.UserSkillId == id).FirstOrDefault();
-            //var skill = _context.Skills.Where(x => x.SkillId == userSkill.SkillId).FirstOrDefault();
-            //var level = _context.SkillLevels.Where(x => x.SkillLevelId == userSkill.SkillLevelId).FirstOrDefault();
-            //_context.Entry(request.skill).State = skill.SkillName;
+            var todoItem = await _context.UserSkills.FindAsync(id);
 
+            if (todoItem == null)
+            {
+                return NotFound();
+            }
 
-            //    await _context.SaveChangesAsync();
+            _context.UserSkills.Remove(todoItem);
+            await _context.SaveChangesAsync();
 
-
-
-            //return NoContent();
             return Ok();
         }
 
